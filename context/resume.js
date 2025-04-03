@@ -1,5 +1,6 @@
 "use client";
 import { saveResumeToDb } from "@/actions/resume";
+import { useRouter } from "next/router";
 import React, { Children, useEffect } from "react";
 import toast, { useToasterStore } from "react-hot-toast";
 
@@ -17,6 +18,7 @@ export function ResumeProvider({ children }) {
   const [resume, setResume] = React.useState(initialState);
   const [step, setStep] = React.useState(1);
 
+  const router = useRouter();
   useEffect(() => {
     const savedResume = localStorage.getItem("resume");
     if (saveResume) {
@@ -26,10 +28,11 @@ export function ResumeProvider({ children }) {
 
   const saveResume = async () => {
     try {
-      const data = saveResumeToDb(resume);
+      const data = await saveResumeToDb(resume);
       setResume(data);
       toast.success("Resume saved successfully");
-      setStep(2);
+      // setStep(2);
+      router.push(`/dashboard/resume/edit/${data._id}`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to save resume");

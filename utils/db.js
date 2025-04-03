@@ -5,8 +5,14 @@ export default async function db() {
     return;
   }
 
+  const DATABASE = process.env.DATABASE;
+
+  if (!DATABASE) {
+    throw new Error("Please define the DATABASE environment variable");
+  }
+
   try {
-    await mongoose.connect(process.env.DATABASE);
+    await mongoose.connect(DATABASE);
     console.log("Connected to database");
   } catch (err) {
     console.log("Connection error", err);

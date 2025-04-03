@@ -6,7 +6,7 @@ import { currentUser } from "@clerk/nextjs/server";
 // does it handle updates? how?
 export const saveResumeToDb = async (data) => {
   try {
-    db();
+    await db();
     const user = await currentUser();
     const userEmail = user?.emailAddresses[0]?.emailAddress;
 
