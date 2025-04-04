@@ -1,15 +1,15 @@
-import { Divide } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useResume } from "@/context/resume";
 import { useUser, SignInButton } from "@clerk/nextjs";
 
 export default function StepOne() {
-  const { resume, setResume, saveResume } = useResume();
+  const { resume, setResume, updateResume, setStep } = useResume();
   const { isSignedIn } = useUser();
   const handleSubmit = (e) => {
     e.preventDefault();
-    saveResume();
+    updateResume();
+    setStep(2);
   };
 
   const handleChange = (e) => {
